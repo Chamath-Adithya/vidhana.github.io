@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidhana - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 3s infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(79, 70, 229, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(79, 70, 229, 0.6)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
+            background-size: 400% 400%;
+        }
+
+        /* Animated background particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rise 15s infinite linear;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Typing effect cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* Shimmer overlay for input */
+        .shimmer-bg {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center text-white relative overflow-hidden animate-gradient">
+
+    <!-- Background Particles Container -->
+    <div id="particles" class="absolute inset-0 z-0"></div>
+
+    <!-- Main Container -->
+    <main class="z-10 w-full max-w-4xl px-6 py-12 text-center relative animate-float">
+        
+        <!-- Logo / Brand Name -->
+        <div class="mb-10 fade-in-up">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 animate-pulse-glow mb-8 transition-transform hover:scale-105 duration-500">
+                <i class="fa-solid fa-code text-4xl text-white"></i>
+            </div>
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-white to-indigo-200 drop-shadow-2xl">
+                Vidhana
+            </h1>
+        </div>
+
+        <!-- Hero Text -->
+        <div class="mb-16 fade-in-up delay-100">
+            <h2 class="text-2xl md:text-3xl font-light text-blue-200 mb-6 min-h-[40px]">
+                <span id="typing-text" class="typing-cursor"></span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                We are crafting a new digital experience. <br class="hidden md:block" />
+                Subscribe below to be the first to know when we launch.
+            </p>
+        </div>
+
+        <!-- Action Area -->
+        <div class="max-w-md mx-auto fade-in-up delay-200 space-y-6">
+            
+            <!-- Real Form Handling via AJAX -->
+            <!-- Note: Action URL is set in JavaScript below -->
+            <form id="subscribeForm" class="relative group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200 animate-pulse"></div>
+                <div class="relative flex items-center">
+                    <!-- IMPORTANT: 'name' attribute is required for Formspree -->
+                    <input type="email" name="email" placeholder="Enter your email address" required
+                        class="w-full px-6 py-4 rounded-full bg-slate-900 border border-slate-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all z-10">
+                    
+                    <!-- Subtle shimmer inside input -->
+                    <div class="absolute inset-0 rounded-full pointer-events-none animate-shimmer shimmer-bg z-20 opacity-50"></div>
+                    
+                    <button type="submit" id="submitBtn"
+                        class="absolute right-2 top-2 bottom-2 px-6 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-600/50 z-30 transform hover:scale-105 active:scale-95 flex items-center justify-center">
+                        <span id="btnText">Notify Me</span>
+                        <!-- Loading Spinner (Hidden by default) -->
+                        <i id="btnSpinner" class="fa-solid fa-circle-notch fa-spin ml-2 hidden"></i>
+                    </button>
+                </div>
+                <!-- Honeypot for spam protection (hidden) -->
+                <input type="text" name="_gotcha" style="display:none !important">
+            </form>
+
+            <div id="success-msg" class="hidden text-green-400 text-sm font-medium animate-bounce p-4 glass-panel rounded-lg">
+                <i class="fa-solid fa-check-circle mr-2"></i> You're on the list! We'll keep you posted.
+            </div>
+            
+            <div id="error-msg" class="hidden text-red-400 text-sm font-medium p-4 glass-panel rounded-lg">
+                <i class="fa-solid fa-circle-exclamation mr-2"></i> Something went wrong. Please try again.
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="absolute bottom-6 w-full text-center text-gray-500 text-xs z-10 tracking-widest uppercase opacity-70">
+        <p>&copy; <span id="year"></span> Vidhana.</p>
+    </footer>
+
+    <script>
+        // --- 1. CONFIGURATION ---
+        // TODO: Replace this with your actual Formspree Form ID
+        // Register at https://formspree.io to get one for free
+        const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID_HERE"; 
+
+        // --- 2. Animations & Effects ---
+        
+        // Particle Background
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 4 + 1 + 'px';
+            particle.style.width = size;
+            particle.style.height = size;
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = Math.random() * 15 + 10 + 's';
+            particle.style.animationDelay = '-' + Math.random() * 20 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Typing Effect
+        const textToType = "Something extraordinary is in the works.";
+        const typingElement = document.getElementById('typing-text');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                typingElement.textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50 + Math.random() * 50);
+            } else {
+                setTimeout(() => { typingElement.classList.remove('typing-cursor'); }, 2000);
+            }
+        }
+        setTimeout(typeWriter, 500);
+
+        // Footer Year
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+        // --- 3. Form Handling Logic ---
+        const form = document.getElementById('subscribeForm');
+        const successMsg = document.getElementById('success-msg');
+        const errorMsg = document.getElementById('error-msg');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Stop standard page reload
+
+            // UI: Show loading state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerText = "Sending...";
+            btnSpinner.classList.remove('hidden');
+            errorMsg.classList.add('hidden');
+
+            const formData = new FormData(form);
+
+            try {
+                // If user hasn't set up ID yet, simulate success for demo
+                if (FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID_HERE")) {
+                    console.warn("Formspree ID not set. Simulating success.");
+                    await new Promise(r => setTimeout(r, 1500)); // Fake delay
+                    showSuccess();
+                    return;
+                }
+
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showSuccess();
+                } else {
+                    const data = await response.json();
+                    if (Object.hasOwn(data, 'errors')) {
+                        throw new Error(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        throw new Error("Oops! There was a problem submitting your form");
+                    }
+                }
+            } catch (error) {
+                // UI: Show Error
+                console.error(error);
+                errorMsg.classList.remove('hidden');
+                errorMsg.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i> ${error.message || "Something went wrong."}`;
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.innerText = "Notify Me";
+                btnSpinner.classList.add('hidden');
+            }
+        });
+
+        function showSuccess() {
+            // Fade out form
+            form.style.opacity = '0';
+            form.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                form.style.display = 'none';
+                successMsg.classList.remove('hidden');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
